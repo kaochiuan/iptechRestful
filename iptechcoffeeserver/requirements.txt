@@ -1,0 +1,15 @@
+dj-database-url==0.4.0
+Django==1.9.5
+gunicorn==19.4.5
+whitenoise==2.0.6
+django-braces==1.8.1
+django-cors-headers==1.1.0
+djangorestframework==3.3.2
+djangorestframework-jwt==1.7.2
+oauthlib==1.0.3
+psycopg2==2.6.1
+PyJWT==1.4.0
+shortuuid==0.4.3
+six==1.10.0
+wheel==0.24.0
+requests==2.10.0

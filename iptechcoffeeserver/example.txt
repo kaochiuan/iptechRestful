@@ -1,0 +1,189 @@
+t ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/users/
+Allow: POST, GET
+Content-Type: application/json
+data sample:
+{
+    "username":"user",
+    "password":"p@ssw0rd",
+    "email":"user@gmail.com"
+}
+
+RESPONSE....
+
+success => HTTP 201 Created
+
+fail    => HTTP 400 Bad request
+
+2. 登入使用者帳戶，取得token(test ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/api-token-auth/
+Allow: POST, GET
+Content-Type: application/json
+data sample:
+{
+    "username":"username",
+    "password":"p@ssw0rd"
+}
+
+RESPONSE....
+
+success => HTTP 200 OK
+Allow: POST, OPTIONS
+Content-Type: application/json
+Vary: Accept
+{
+    "userId": 23,
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM"
+}
+
+fail    => HTTP 400 Bad request
+
+利用取得的token執行需認證之動作，取得之token，只有10分鐘的時效，過期後無法使用，需再登入取得新的token
+
+3. 註冊咖啡店(test ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/stores/
+Allow: POST, GET
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
+
+data sample:
+{
+	"name": "新竹光復路85°C",
+	"latitude":24.7847082,
+	"longitude":121.0132248,
+	"address":"300新竹市東區光復路一段523-1號"
+}
+
+4. 註冊新的Menu(test ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/menus/
+Allow: POST, GET
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
+
+data sample:
+{
+    "name": "拿鐵",
+    "coffeeCombination":1,
+    "coffeeThickness":2,
+    "pressureSelection":1,
+    "temperatureSelection":2,
+    "sugarSelection":3,
+    "milkSelection":1,
+    "isCustomCoffeeBean":false,
+    "isCustomized":false    
+}
+
+5. 新增消費記錄(test ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/consumeRecords/
+Allow: POST, GET
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
+
+值為各關聯物件之pk
+data sample:
+{
+ 	"store":1,
+ 	"menu":1
+}
+
+6. 更新token，需傳送合法的token給server，過期的token無法使用(test ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/api-token-refresh/
+Allow: POST, GET
+Content-Type: application/json
+data sample:
+{
+	"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM"
+}
+
+RESPONSE....
+
+success => HTTP 200 OK
+Allow: POST, OPTIONS
+Content-Type: application/json
+Vary: Accept
+{
+    "token": "refresh token"
+}
+
+fail => HTTP 400 Bad request
+
+7. 新增使用者資訊(test ok 2015/5/1)
+https://iptechcoffeeserver.herokuapp.com/profiles/
+Allow: POST, GET
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
+
+data sample:
+{
+	"gender": 1,
+	"birthday": "1982-11-01",
+	"phone": "0912345678",
+	"address":"新竹市東區光復路一段123號"
+}
+
+8. 新增咖啡機資訊(test ok 2015/5/20)
+https://iptechcoffeeserver.herokuapp.com/devices/
+Allow: POST, GET
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
+
+data sample:
+{
+    "deviceId": 1,
+    "deviceName": "咖啡機1號",
+    "ipv4Address": "172.20.3.119",
+    "port": 8088,
+    "store": 1
+}
+
+
+//更新、刪除、取得單筆記錄詳細資料
+目前的資料模型有users, stores, menus, consumeRecords, profiles, devices
+https://iptechcoffeeserver.herokuapp.com/{model}/{Id}/
+
+9.取得單筆記錄詳細資料
+發送GET方法時，可取得單筆記錄詳細資料
+example:
+HTTP Method: GET
+https://iptechcoffeeserver.herokuapp.com/proflies/1/
+https://iptechcoffeeserver.herokuapp.com/stores/1/
+https://iptechcoffeeserver.herokuapp.com/devices/1/
+....
+
+10.更新單筆記錄
+發送PATCH方法，加上除了想更新的資料欄位，即可更新資料
+example: 變更訂單狀態
+https://iptechcoffeeserver.herokuapp.com/consumeRecords/5/
+HTTP Method: PATCH
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
+{
+    "status": "0"
+}
+
+11.刪除單筆資料
+發送Delete方法，加上除了想更新的資料欄位，即可更新資料
+example: 刪除某消費記錄
+https://iptechcoffeeserver.herokuapp.com/consumeRecords/6/
+HTTP Method: DELETE
+Content-Type: application/json
+request header - "Authorization":"JWT jwtToken"
+authorization sample:
+WWW-Authenticate: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imthb2NoaXVhbkBnbWFpbC5jb20iLCJleHAiOjE0NTY3NTUxODksInVzZXJuYW1lIjoia2FvY2hpdWFuIiwidXNlcl9pZCI6MX0.OCyihf2gksoojwwutnwDSExRV_TczGG1W1AW_ovBlNM
