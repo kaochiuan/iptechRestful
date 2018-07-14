@@ -22,7 +22,7 @@ SECRET_KEY = 'n#qy6qpyr81nbe%wmcufq%0$7q-dwjmwcqz3+*f3#g77#5e%_r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['iptechcoffeeserver.herokuapp.com']
 
 # Application definition
 
